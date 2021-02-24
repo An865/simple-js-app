@@ -31,16 +31,11 @@ let pokemonList = [
   }
 ];
 
-for (var i = 0; i < pokemonList.length; i++) {
-  //prints pokemon name and height
-  let name = pokemonList[i].name;
-  let height = pokemonList[i].height;
-
-  document.write(`<p id ="pokemon"> ${name} height: ${height} `);
-
-  //comments on pokemon height
-    if(height > 1.0){
-      document.write(' - that\'s pretty tall') + '</p>';
-    }
-
+function show(pokemon){
+  document.write(`<p id='pokemon'> ${pokemon.name} height: ${pokemon.height}`);
+  if(pokemon.height > 1.0){
+    document.write(' - that\'s pretty tall!' + '</p>')
+  }
 }
+
+pokemonList.forEach(show);
