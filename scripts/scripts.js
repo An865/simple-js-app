@@ -45,7 +45,9 @@ let pokemonRepository = (function(){
           let keyVal = Object.keys(item);
           //ensure new pokemon has name, height, and type properties
           if(keyVal.includes('name') && keyVal.includes('height') && keyVal.includes('type'))
-            pokemonList.push(item);
+            {pokemonList.push(item)} else {
+              alert('Not all properties for the pokemon were included');
+            };
       } else {
         alert('All items in pokemonRepository must be objects!');
       }
@@ -64,7 +66,7 @@ let pokemonRepository = (function(){
 })();
 
 //function to display pokemon on HTML page including name, height, and comment on height
-function display(pokemon){
+function displayPokemon(pokemon){
   document.write(`<p id='pokemon'> ${pokemon.name} height: ${pokemon.height}`);
   if(pokemon.height > 1.0){
     document.write(' - that\'s pretty tall!' + '</p>')
@@ -72,7 +74,7 @@ function display(pokemon){
 }
 
 //call display on each element of the pokemon in the pokemonList array
-pokemonRepository.getAll().forEach(display);
+pokemonRepository.getAll().forEach(displayPokemon);
 
 //return array of pokemon with the name of 'Pickachu'
 console.log(pokemonRepository.checkName('Pikachu'));
