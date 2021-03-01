@@ -70,11 +70,11 @@ let pokemonRepository = (function(){
        listItem.appendChild(listButton);
        list.appendChild(listItem);
        //call function to add event listener on listButton and pass button and pokemon object
-       addListener(listButton, pokemon, showDetails);
+       addListener(listButton, showDetails, pokemon);
     }
 
 //function to add event listener to a given element
-    function addListener(element, object, method){
+    function addListener(element, method, object){
       element.addEventListener('click', () => method(object));
     }
 
