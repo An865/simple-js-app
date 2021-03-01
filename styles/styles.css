@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+
 html {
   position: relative;
   min-height: 100%;
@@ -8,7 +10,7 @@ html {
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: 'Lato', sans-serif;
   font-size: 18px;
   line-height: normal;
   margin: 0 0 200px;
@@ -19,6 +21,16 @@ h1{
   text-align: center;
 }
 
-#pokemon{
-text-align: center;
+ul{
+  padding: 0;
+  list-style-type: none;
+  text-align: center;
+}
+
+.button-style{
+  border: 1px solid #91C9FF;
+  cursor: pointer;
+  background: transparent;
+  margin:1%;
+  padding:2%;
 }

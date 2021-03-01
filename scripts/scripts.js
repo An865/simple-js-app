@@ -39,7 +39,7 @@ let pokemonRepository = (function(){
     }
 
 //add new pokemon to the pokemonList array
-    function add(item){
+    function addPokemon(item){
       //ensure only objects are added to pokemonRepository
         if(typeof(item) == 'object'){
           let keyVal = Object.keys(item);
@@ -58,23 +58,44 @@ let pokemonRepository = (function(){
       return pokemonList.filter(pokemon => pokemon.name == target);
     }
 
+    function addListItem(pokemon){
+      //unordered list of pokemon and list item
+       let list = document.querySelector('.pokemon-list');
+       let listItem = document.createElement('li');
+       //create button, give it pokemon's name, and add class to style
+       let listButton = document.createElement('button');
+       listButton.innerText = pokemon.name;
+       listButton.classList.add('button-style');
+       //append button to list item.  append list item to unordered list
+       listItem.appendChild(listButton);
+       list.appendChild(listItem);
+       //call function to add event listener on listButton and pass button and pokemon object
+       addListener(listButton, pokemon);
+    }
+
+//function to add event listener to a given element
+    function addListener(listButton, pokemon){
+      listButton.addEventListener('click', () => showDetails(pokemon));
+    }
+
+//function to show pokemon details (currently logged to console)
+    function showDetails(pokemon){
+      console.log(pokemon)
+    }
+
     return {
       getAll: getAll,
-      add: add,
+      addPokemon: addPokemon,
       checkName: checkName,
+      addListItem: addListItem
     }
 })();
 
-//function to display pokemon on HTML page including name, height, and comment on height
-function displayPokemon(pokemon){
-  document.write(`<p id='pokemon'> ${pokemon.name} height: ${pokemon.height}`);
-  if(pokemon.height > 1.0){
-    document.write(' - that\'s pretty tall!' + '</p>')
-  }
-}
+//call displayPokemon on each item of pokemonList array to display in HTML
+pokemonRepository.getAll().forEach( pokemon => pokemonRepository.addListItem(pokemon));
 
-//call display on each element of the pokemon in the pokemonList array
-pokemonRepository.getAll().forEach(displayPokemon);
 
-//return array of pokemon with the name of 'Pickachu'
-console.log(pokemonRepository.checkName('Pikachu'));
+
+/* // return array of pokemon with the name of 'Pickachu'
+Note: currently this is commented out to keep console clear for showDetails() */
+//console.log(pokemonRepository.checkName('Pikachu'));
