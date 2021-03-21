@@ -112,8 +112,8 @@ let pokemonRepository = (() => {
  
         //listen for left and right swipe motions on mobile devices
         let modal = document.getElementById('exampleModal');
-        modal.addEventListener('touchstart', startTouch, false);
-        modal.addEventListener('touchmove', moveTouch(pokemon), false);
+        modal.addEventListener('pointerdown', startTouch, false);
+        modal.addEventListener('pointermove', moveTouch(pokemon), false);
       });
   }
     

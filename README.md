@@ -7,11 +7,9 @@ to display data about a particular pokemon.
 This app was built using ECMAScript2015 (ES6).
 
 Promise-Polyfill was used for browsers that don't support promises
-
 https://github.com/taylorhakes/promise-polyfill
 
 Fetch-Polyfill was used for browsers that don't support fetch
-
 https://github.com/github/fetch
 
 ## Project APIs:
