@@ -8,8 +8,16 @@ let pokemonRepository = (() => {
   //Container for modal that will display Pokemon information
   let modalContainer = document.getElementById('modal-container');
   //variables to store the initial X and Y positions
-  let initialX = null;
-  let initialY = null;
+
+ 
+  //listen for left and right swipe motions on mobile devices
+    let modal = document.getElementById('exampleModal');
+    let isSwiping = false;
+    let swipeData = [];
+    modal.addEventListener('pointerdown', handleStart);
+    modal.addEventListener('pointermove', handleMove);
+    modal.addEventListener('pointerup', handleEnd);
+    
 
   //get list of all pokemon in pokemonList array
   function getPokemonArray(){
@@ -108,56 +116,54 @@ let pokemonRepository = (() => {
         modalBody.appendChild(weightElement);
         modalBody.appendChild(typeContainer);
         modalBody.appendChild(imgContainer);
-
- 
-        //listen for left and right swipe motions on mobile devices
-        let modal = document.getElementById('exampleModal');
-        modal.addEventListener('pointerdown', startTouch, false);
-        modal.addEventListener('pointermove', moveTouch(pokemon), false);
+        swipeData.push(pokemon);
       });
   }
     
-  //when user puts finger down store the position 
-  function startTouch(e){
-    initialX = e.touches[0].clientX;
-    initialY = e.touches[0].clientY;
+  //handle start of touch
+  function handleStart(e){
+    isSwiping = true;
+    let initialX = e.pageX;
+    let initialY = e.pageY;
+    swipeData.push(initialX);
+    swipeData.push(initialY);
   }
 
-  //function to handle swipe motion as variable to accept pokemon object and event object
-  let moveTouch = function(pokemon){
-    return function (e){
-      //if finger is removed do nothing
-      if (initialX === null){
-        return;
-      }
+  //handle touch movement
+  function handleMove(e){
+    //To prevent changing modal content unless swiping
+    if(!isSwiping){
+      return;
+    } 
+    
+    // current x and y coordinates
+    let currentX = e.pageX;
+    let currentY = e.pageY;
 
-      if (initialY === null){
-        return;
-      }
-      
-      //index of current pokemon
-      let currPokeIndex = pokemonList.indexOf(pokemon);
+    //difference between current and initial x/y coordinates
+    let diffX = currentX - swipeData[1];
+    let diffY = currentY - swipeData[2];
+  
+    //index of current pokemon
+    let currPokeIndex = pokemonList.indexOf(swipeData[0]); 
 
-      //store the current X position
-      let currentX = e.touches[0].clientX;
-      let currentY = e.touches[0].clientY;
-
-      //get the difference between initial X position and current X position
-      let diffX = initialX - currentX;
-      let diffY = initialX - currentY;
-
-      //determine if swipe is predominately horizontal or vertical 
-      if(Math.abs(diffX) > Math.abs(diffY)){
-        //horizontal swipe
-        if (diffX > 0) {
-          // swiped left
-          showDetails(pokemonList[currPokeIndex - 1]);
-        } else {
-          // swiped right
-          showDetails(pokemonList[ncurrPokeIndex + 1]);
-        } 
-      }
+    //Horizontal movement
+    if(Math.abs(diffX) > Math.abs(diffY)){
+      if (diffX > 0) {
+        // swiped left
+        console.log("swiped left");
+        showDetails(pokemonList[currPokeIndex - 1]);
+      } else {
+        // swiped right
+        console.log("swiped right");
+        showDetails(pokemonList[currPokeIndex + 1]);
+      } 
     }
+  }
+
+  //handle end of touch
+  function handleEnd(){
+    isSwiping = false;
   }
 
 
