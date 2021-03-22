@@ -76,6 +76,7 @@ let pokemonRepository = (() => {
   function showDetails(pokemon) {
     loadApiDetails(pokemon)
       .then(() => {
+        swipeData = []
         //when promise is returned with details data from API...
 
           //Get element with class 'modal content' to append height, type, image elements
@@ -166,52 +167,51 @@ let pokemonRepository = (() => {
     isSwiping = false;
   }
 
-
 //Load list of pokemon from API
-    function loadApiList() {
-      return fetch(apiUrl)
-            .then(response => response.json())
-            .then(json => {
-                json.results.forEach(item => {
-                    let pokemon = {
-                      name: item.name,
-                      detailsUrl: item.url,
-                    };
-                  //pass pokemon object to add() to include in pokemonList array
-                  addToPokemonArray(pokemon);
-                });
-            })
-      .catch(err => console.error(err))
-    }
-
-//function to get details of each pokemon from API
-function loadApiDetails(pokemon){
-    //url associated with pokemon
-    let url = pokemon.detailsUrl;
-    //return completed promise of fetched data from url
-    return fetch(url)
-          //promised response to json data promise
+  function loadApiList() {
+    return fetch(apiUrl)
           .then(response => response.json())
-          //use promised details data from json to assign pokemon properties
-          .then(details => {
-             pokemon.imageUrl = details.sprites.front_default;
-             pokemon.height = details.height;
-             pokemon.weight = details.weight;
-             pokemon.types = details.types;
-          }) //end function, end then
-          .catch(err => console.log(err))
-}
+          .then(json => {
+              json.results.forEach(item => {
+                  let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url,
+                  };
+                //pass pokemon object to add() to include in pokemonList array
+                addToPokemonArray(pokemon);
+              });
+          })
+    .catch(err => console.error(err))
+  }
 
-//filter pokemonList by searched name and produce new html buttons based on filter
-    function pokemonLookup(searchValue){
-      let list = document.querySelector('.list-group');
-      list.innerHTML = '';
-      let searched = pokemonList.filter(pokemon => {
-        let pokemonNames = pokemon.name;
-        if(pokemonNames.includes(searchValue))
-        htmlList(pokemon);
-      });
-    }
+  //function to get details of each pokemon from API
+  function loadApiDetails(pokemon){
+      //url associated with pokemon
+      let url = pokemon.detailsUrl;
+      //return completed promise of fetched data from url
+      return fetch(url)
+            //promised response to json data promise
+            .then(response => response.json())
+            //use promised details data from json to assign pokemon properties
+            .then(details => {
+              pokemon.imageUrl = details.sprites.front_default;
+              pokemon.height = details.height;
+              pokemon.weight = details.weight;
+              pokemon.types = details.types;
+            }) //end function, end then
+            .catch(err => console.log(err))
+  }
+
+  //filter pokemonList by searched name and produce new html buttons based on filter
+  function pokemonLookup(searchValue){
+    let list = document.querySelector('.list-group');
+    list.innerHTML = '';
+    let searched = pokemonList.filter(pokemon => {
+      let pokemonNames = pokemon.name;
+      if(pokemonNames.includes(searchValue))
+      htmlList(pokemon);
+    });
+  }
 
     return {
       loadApiList: loadApiList,
