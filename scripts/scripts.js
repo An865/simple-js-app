@@ -9,14 +9,16 @@ let pokemonRepository = (() => {
   let modalContainer = document.getElementById('modal-container');
   //variables to store the initial X and Y positions
 
- 
   //listen for left and right swipe motions on mobile devices
-    let modal = document.getElementById('exampleModal');
-    let isSwiping = false;
-    let swipeData = [];
-    modal.addEventListener('pointerdown', handleStart);
-    modal.addEventListener('pointermove', handleMove);
-    modal.addEventListener('pointerup', handleEnd);
+  let modal = document.getElementById('exampleModal');
+  //variable to determine if swiping or not
+  let isSwiping = false;
+  //array to hold data needed for swiping
+  let swipeData = [];
+  //pointers event listeners
+  modal.addEventListener('pointerdown', handleStart);
+  modal.addEventListener('pointermove', handleMove);
+  modal.addEventListener('pointerup', handleEnd);
     
 
   //get list of all pokemon in pokemonList array
@@ -76,7 +78,10 @@ let pokemonRepository = (() => {
   function showDetails(pokemon) {
     loadApiDetails(pokemon)
       .then(() => {
-        swipeData = []
+
+        //clear swipeData array
+        swipeData = [];
+
         //when promise is returned with details data from API...
 
           //Get element with class 'modal content' to append height, type, image elements
@@ -117,6 +122,8 @@ let pokemonRepository = (() => {
         modalBody.appendChild(weightElement);
         modalBody.appendChild(typeContainer);
         modalBody.appendChild(imgContainer);
+
+        //push pokemon to swipeData array
         swipeData.push(pokemon);
       });
   }
@@ -150,14 +157,21 @@ let pokemonRepository = (() => {
 
     //Horizontal movement
     if(Math.abs(diffX) > Math.abs(diffY)){
+      // swipe left
       if (diffX > 0) {
-        // swiped left
-        console.log("swiped left");
-        showDetails(pokemonList[currPokeIndex - 1]);
+          if(currPokeIndex == 0){
+            showDetails(pokemonList[currPokeIndex]);
+          }else{  
+            // behavior only for array elements other than first (index 0)
+            showDetails(pokemonList[currPokeIndex - 1]);
+          }
+      // swiped right    
       } else {
-        // swiped right
-        console.log("swiped right");
-        showDetails(pokemonList[currPokeIndex + 1]);
+          if(currPokeIndex == pokemonList.length - 1){
+            showDetails(pokemonList[currPokeIndex]);
+          } else {
+          showDetails(pokemonList[currPokeIndex + 1]);
+        } 
       } 
     }
   }

@@ -4,25 +4,26 @@ The pokemon are listed in the HTML document via buttons that when pressed open a
 to display data about a particular pokemon.
 
 ## Project Dependencies:
-This app was built using ECMAScript2015 (ES6).
+This app was built using Javascript - ECMAScript2015 (ES6).
 
-Promise-Polyfill was used for browsers that don't support promises
-https://github.com/taylorhakes/promise-polyfill
+Promise-Polyfill was used for browsers that don't support promises  
+https://github.com/taylorhakes/promise-polyfill  
 
-Fetch-Polyfill was used for browsers that don't support fetch
-https://github.com/github/fetch
+Fetch-Polyfill was used for browsers that don't support fetch  
+https://github.com/github/fetch  
 
 ## Project APIs:
-Pointer Events API 
+Pointer Events API  
 URL: https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events
-PokeAPI 
+
+PokeAPI   
 URL: https://pokeapi.co/api/v2/pokemon/
 
 ## Project Stack
 - HTML
 - CSS
 - Bootstrap
-- Javascript
+- Javascript (ES2015)
 
 
 ## App Usage
