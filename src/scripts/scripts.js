@@ -3,17 +3,17 @@ let pokemonRepository = (() => {
   //pokemonList array will hold all pokemon from pokemon API
   let pokemonList = [];
   //URL of pokemon API
-  let apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
   //listen for left and right swipe motions on mobile devices
-  let modal = document.getElementById("exampleModal");
+  let modal = document.getElementById('exampleModal');
   //variable to determine if swiping or not
   let isSwiping = false;
   //array to hold data needed for swiping
   let swipeData = [];
   //pointers event listeners
-  modal.addEventListener("pointerdown", handleStart);
-  modal.addEventListener("pointermove", handleMove);
-  modal.addEventListener("pointerup", handleEnd);
+  modal.addEventListener('pointerdown', handleStart);
+  modal.addEventListener('pointermove', handleMove);
+  modal.addEventListener('pointerup', handleEnd);
 
   //get list of all pokemon in pokemonList array
   function getPokemonArray() {
@@ -23,18 +23,18 @@ let pokemonRepository = (() => {
   //add new pokemon to the pokemonList array
   function addToPokemonArray(pokemon) {
     //ensure only objects are added to pokemonRepository
-    if (typeof pokemon == "object") {
+    if (typeof pokemon == 'object') {
       //keyVal is array that holds keys of pokemon object
       let keyVal = Object.keys(pokemon);
       //ensure keyVal array includes keys 'name' and 'detailsUrl'
-      if (keyVal.includes("name") && keyVal.includes("detailsUrl")) {
+      if (keyVal.includes('name') && keyVal.includes('detailsUrl')) {
         //add pokemon object to pokemonList array
         pokemonList.push(pokemon);
       } else {
-        alert("Incorrect JSON keys");
+        alert('Incorrect JSON keys');
       }
     } else {
-      alert("All items in pokemonRepository must be objects!");
+      alert('All items in pokemonRepository must be objects!');
     }
   }
 
@@ -46,16 +46,16 @@ let pokemonRepository = (() => {
   //add pokemon from array into the HTML list //aka addListItem
   function htmlList(pokemon) {
     //unordered list of pokemon and list item
-    let list = document.querySelector(".list-group");
-    let listItem = document.createElement("li");
-    listItem.classList.add("list-group-item", "col-md-4", "col-12");
+    let list = document.querySelector('.list-group');
+    let listItem = document.createElement('li');
+    listItem.classList.add('list-group-item', 'col-md-4', 'col-12');
     //create button, give it pokemon's name, and add class to style
-    let listButton = document.createElement("button");
+    let listButton = document.createElement('button');
     listButton.innerText = capitalize(pokemon.name);
-    listButton.classList.add("btn", "btn-primary");
-    listButton.setAttribute("type", "button");
-    listButton.setAttribute("data-bs-toggle", "modal");
-    listButton.setAttribute("data-bs-target", "#exampleModal");
+    listButton.classList.add('btn', 'pokebtn');
+    listButton.setAttribute('type', 'button');
+    listButton.setAttribute('data-bs-toggle', 'modal');
+    listButton.setAttribute('data-bs-target', '#exampleModal');
     //append button to list item.  append list item to unordered list
     listItem.appendChild(listButton);
     list.appendChild(listItem);
@@ -65,7 +65,7 @@ let pokemonRepository = (() => {
 
   //function to add event listener to a given element
   function addListener(element, method, object) {
-    element.addEventListener("click", () => method(object));
+    element.addEventListener('click', () => method(object));
   }
 
   //function to show pokemon details
@@ -73,37 +73,35 @@ let pokemonRepository = (() => {
     loadApiDetails(pokemon).then(() => {
       //clear swipeData array
       swipeData = [];
-
       //when promise is returned with details data from API...
-
       //Get element with class 'modal content' to append height, type, image elements
-      let modalBody = document.querySelector(".modal-body");
+      let modalBody = document.querySelector('.modal-body');
       //clear modalBody
-      modalBody.innerHTML = "";
+      modalBody.innerHTML = '';
       //display pokemon name
-      document.querySelector(".modal-title").innerHTML = capitalize(
+      document.querySelector('.modal-title').innerHTML = capitalize(
         pokemon.name
       );
       //element to display pokemon height
-      let heightElement = document.createElement("p");
+      let heightElement = document.createElement('p');
       heightElement.innerText = `Pokemon Height: ${pokemon.height} meters`;
       //element to display pokemon height
-      let weightElement = document.createElement("p");
+      let weightElement = document.createElement('p');
       weightElement.innerText = `Pokemon Weight: ${pokemon.weight} hectograms`;
       //element to display list of pokemon types
-      let typeContainer = document.createElement("ul");
-      typeContainer.classList.add("poketype");
-      typeContainer.innerText = "Pokemon Type:";
+      let typeContainer = document.createElement('ul');
+      typeContainer.classList.add('poketype');
+      typeContainer.innerText = 'Pokemon Type:';
       //loop through types array
       pokemon.types.forEach((item) => {
         let typeData = item.type.name;
-        let newListItem = document.createElement("li");
+        let newListItem = document.createElement('li');
         typeContainer.appendChild(newListItem);
         newListItem.innerText += capitalize(typeData);
       });
       //element to display pokemon image
-      let imgContainer = document.createElement("img");
-      imgContainer.setAttribute("src", pokemon.imageUrl);
+      let imgContainer = document.createElement('img');
+      imgContainer.setAttribute('src', pokemon.imageUrl);
       //add close button, pokemon title, height, image to modal
       modalBody.appendChild(heightElement);
       modalBody.appendChild(weightElement);
@@ -203,8 +201,8 @@ let pokemonRepository = (() => {
 
   //filter pokemonList by searched name and produce new html buttons based on filter
   function pokemonLookup(searchValue) {
-    let list = document.querySelector(".list-group");
-    list.innerHTML = "";
+    let list = document.querySelector('.list-group');
+    list.innerHTML = '';
     pokemonList.filter((pokemon) => {
       let pokemonNames = pokemon.name;
       if (pokemonNames.includes(searchValue)) htmlList(pokemon);
@@ -230,7 +228,7 @@ pokemonRepository.loadApiList().then(() => {
 });
 
 // //event listener for search input
-let searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", () => {
+let searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
   pokemonRepository.pokemonLookup(searchInput.value);
 });

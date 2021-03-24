@@ -1,3 +1,7 @@
+body{
+  background-color: #F6F6F6;
+}
+
 h1{
   font-family: 'Lato', sans-serif;
   font-style: italic;
@@ -11,7 +15,7 @@ h1{
 }
 
 nav {
-  background-color: #e3f2fd;
+  background-color: #E3F2FD;
 }
 
 .list-group{
@@ -20,6 +24,7 @@ flex-direction: row;
 
 .list-group-item{
   border: none;
+  background-color: #F6F6F6;
 }
 
 img {
@@ -35,4 +40,16 @@ img {
 
 #exampleModal{
   touch-action: none;
+}
+
+
+.pokebtn{
+  width: 100%;
+  background-color: #03045E;
+  color: #F6F6F6;
+}
+
+.pokebtn:hover{
+  background-color: #6D8EA0;
+  color: #03045E;
 }
